@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПородиСобак — Енциклопедія порід собак</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
+      
+        :root {
+            --primary: #3b82f6;
+        }
+      
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+      
+        .hero-bg {
+            background: linear-gradient(to bottom, #3b82f6, #1e40af);
+            background-size: cover;
+            background-position: center;
+        }
+      
+        .breed-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+      
+        .breed-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+      
+        .modal {
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+      
+        @keyframes modalPop {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+      
+        .nav-link {
+            position: relative;
+        }
+      
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+      
+        .nav-link:hover:after {
+            width: 100%;
+        }
+      
+        .paw {
+            animation: pawWalk 2s infinite alternate;
+        }
+      
+        @keyframes pawWalk {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(8px); }
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-800">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-dog text-4xl text-blue-600 paw"></i>
+                <div>
+                    <span class="text-3xl font-bold tracking-tight text-blue-600">Породи</span>
+                    <span class="text-3xl font-bold tracking-tight text-zinc-900">Собак</span>
+                </div>
+            </div>
+          
+            <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+                <a href="#home" class="nav-link text-zinc-700 hover:text-blue-600 transition-colors">Головна</a>
+                <a href="#breeds" class="nav-link text-zinc-700 hover:text-blue-600 transition-colors">Породи</a>
+                <a href="#about" class="nav-link text-zinc-700 hover:text-blue-600 transition-colors">Про собак</a>
+                <a href="#gallery" class="nav-link text-zinc-700 hover:text-blue-600 transition-colors">Галерея</a>
+                <a href="#facts" class="nav-link text-zinc-700 hover:text-blue-600 transition-colors">Цікаві факти</a>
+            </div>
+          
+            <div class="flex items-center gap-4">
+                <a href="#breeds"
+                   class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl flex items-center gap-2 transition-all active:scale-95">
+                    <i class="fa-solid fa-paw"></i>
+                    <span>Обрати породу</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="home" class="hero-bg h-screen flex items-center text-white">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-3xl mb-8">
+                <i class="fa-solid fa-heart text-red-400"></i>
+                <span class="font-medium tracking-widest text-sm">БІЛЬШЕ 400 ПОРІД У СВІТІ</span>
+            </div>
+          
+            <h1 class="text-6xl md:text-7xl font-bold leading-none mb-6 tracking-tighter">
+                Світ порід<br>собак у твоїх руках
+            </h1>
+            <p class="max-w-2xl mx-auto text-xl md:text-2xl text-white/90 mb-10">
+                Дізнайтеся все про характер, догляд, історію та особливості найпопулярніших порід.
+                Оберіть друга на все життя.
+            </p>
+          
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#breeds"
+                   class="px-10 py-5 bg-white text-blue-700 hover:bg-amber-400 hover:text-zinc-900 font-bold text-xl rounded-3xl transition-all flex items-center justify-center gap-3 shadow-xl">
+                    <span>Переглянути всі породи</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <button onclick="showRandomBreed()"
+                        class="px-10 py-5 border-2 border-white/80 hover:border-white font-bold text-xl rounded-3xl transition-all flex items-center justify-center gap-3 backdrop-blur-md">
+                    <i class="fa-solid fa-dice"></i>
+                    <span>Випадкова порода</span>
+                </button>
+            </div>
+          
+            <div class="mt-16 flex justify-center gap-8 text-sm">
+                <div class="text-center">
+                    <div class="text-4xl font-bold">20</div>
+                    <div class="text-white/70">порід у каталозі</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold">1500+</div>
+                    <div class="text-white/70">фото</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold">10</div>
+                    <div class="text-white/70">років досвіду</div>
+                </div>
+            </div>
+        </div>
+      
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <i class="fa-solid fa-chevron-down text-4xl text-white/60"></i>
+        </div>
+    </header>
+
+    <!-- FILTERS + SEARCH -->
+    <div id="breeds" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+            <div>
+                <span class="text-blue-600 font-medium text-sm tracking-widest">КАТАЛОГ</span>
+                <h2 class="text-5xl font-bold tracking-tight">Породи собак</h2>
+            </div>
+          
+            <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                <div class="flex gap-2 bg-white rounded-3xl p-1 shadow-sm">
+                    <button onclick="filterBySize('all')" id="size-all"
+                            class="px-6 py-3 rounded-3xl font-medium transition-all bg-blue-600 text-white">Всі</button>
+                    <button onclick="filterBySize('small')" id="size-small"
+                            class="px-6 py-3 rounded-3xl font-medium transition-all">Маленькі</button>
+                    <button onclick="filterBySize('medium')" id="size-medium"
+                            class="px-6 py-3 rounded-3xl font-medium transition-all">Середні</button>
+                    <button onclick="filterBySize('large')" id="size-large"
+                            class="px-6 py-3 rounded-3xl font-medium transition-all">Великі</button>
+                </div>
+              
+                <div class="relative">
+                    <input id="search-input"
+                           onkeyup="filterBreeds()"
+                           type="text"
+                           placeholder="Пошук породи..."
+                           class="w-full md:w-80 bg-white border border-zinc-200 focus:border-blue-500 rounded-3xl px-6 py-4 text-lg outline-none pl-14">
+                    <i class="fa-solid fa-magnifying-glass absolute left-6 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <div id="breeds-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Заповнюється JavaScript -->
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="bg-white py-20">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-16 items-center">
+                <div class="md:col-span-5">
+                    <div class="sticky top-24">
+                        <img src="images/dog-with-owner.jpg"
+                             alt="Собака та господар"
+                             class="rounded-3xl shadow-2xl">
+                    </div>
+                </div>
+                <div class="md:col-span-7 space-y-8">
+                    <div class="inline-flex items-center gap-2 bg-amber-100 text-amber-700 px-5 py-2 rounded-3xl text-sm font-medium">
+                        <i class="fa-solid fa-book"></i>
+                        ЕНЦИКЛОПЕДІЯ
+                    </div>
+                    <h2 class="text-5xl leading-none font-bold tracking-tighter">
+                        Чому важливо знати породу собаки?
+                    </h2>
+                    <div class="prose prose-zinc text-lg max-w-none">
+                        <p>
+                            Кожна порода має унікальний характер, потреби в активності, особливості догляду та схильність до певних захворювань.
+                            Правильний вибір — це запорука щасливого життя для вас і вашого друга.
+                        </p>
+                        <p>
+                            На сайті вже 20 популярних порід — від сімейних гігантів до маленьких компаньйонів.
+                        </p>
+                    </div>
+                  
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <div class="text-4xl font-bold text-blue-600 mb-1">400+</div>
+                            <div class="text-sm uppercase tracking-widest text-zinc-500">Порід у світі</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-amber-600 mb-1">10 000+</div>
+                            <div class="text-sm uppercase tracking-widest text-zinc-500">Щасливих господарів</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="py-20 bg-zinc-900 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span class="text-amber-400 text-sm font-medium">ФОТОГАЛЕРЕЯ</span>
+                    <h2 class="text-5xl font-bold tracking-tighter">Краса в кожній породі</h2>
+                </div>
+                <a href="#" onclick="alert('Галерея скоро буде ще більшою! ❤️')"
+                   class="text-amber-400 hover:text-amber-300 flex items-center gap-2 text-lg">
+                    Дивитися всі <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+          
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <img src="images/gallery-1.jpg" class="rounded-3xl aspect-square object-cover hover:scale-105 transition-transform duration-500">
+                <img src="images/gallery-2.jpg" class="rounded-3xl aspect-square object-cover hover:scale-105 transition-transform duration-500">
+                <img src="images/gallery-3.jpg" class="rounded-3xl aspect-square object-cover hover:scale-105 transition-transform duration-500">
+                <img src="images/gallery-4.jpg" class="rounded-3xl aspect-square object-cover hover:scale-105 transition-transform duration-500">
+                <img src="images/gallery-5.jpg" class="rounded-3xl aspect-square object-cover hover:scale-105 transition-transform duration-500">
+                <img src="images/gallery-6.jpg" class="rounded-3xl aspect-square object-cover hover:scale-105 transition-transform duration-500 lg:col-span-2">
+            </div>
+        </div>
+    </section>
+
+    <!-- FUN FACTS -->
+    <section id="facts" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <span class="px-6 py-3 bg-blue-100 text-blue-700 rounded-3xl text-sm font-semibold">ЦІКАВІ ФАКТИ</span>
+            <h2 class="text-5xl font-bold mt-6 mb-16">Що ви не знали про собак</h2>
+          
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="text-left">
+                    <div class="text-7xl mb-4">🐾</div>
+                    <h3 class="font-bold text-2xl mb-3">Собаки бачать кольори</h3>
+                    <p class="text-zinc-600">Добре розрізняють синій і жовтий, але не так яскраво, як люди.</p>
+                </div>
+                <div class="text-left">
+                    <div class="text-7xl mb-4">🦴</div>
+                    <h3 class="font-bold text-2xl mb-3">Найстаріша порода</h3>
+                    <p class="text-zinc-600">Салюкі — понад 4000 років історії.</p>
+                </div>
+                <div class="text-left">
+                    <div class="text-7xl mb-4">🏃</div>
+                    <h3 class="font-bold text-2xl mb-3">Швидкість</h3>
+                    <p class="text-zinc-600">Грейхаунд — до 72 км/год.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-zinc-900 text-zinc-400 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-10">
+                <div class="md:col-span-5">
+                    <div class="flex items-center gap-3 text-white mb-6">
+                        <i class="fa-solid fa-dog text-4xl"></i>
+                        <span class="text-3xl font-bold tracking-tighter">ПородиСобак</span>
+                    </div>
+                    <p class="max-w-md">
+                        Довідник популярних порід собак. Інформація зібрана з любов'ю до чотирилапих.
+                    </p>
+                    <div class="mt-8 flex gap-6 text-2xl">
+                        <i class="fa-brands fa-instagram hover:text-white cursor-pointer transition-colors"></i>
+                        <i class="fa-brands fa-facebook hover:text-white cursor-pointer transition-colors"></i>
+                        <i class="fa-brands fa-youtube hover:text-white cursor-pointer transition-colors"></i>
+                    </div>
+                </div>
+              
+                <div class="md:col-span-2">
+                    <h4 class="font-semibold text-white mb-5">Навігація</h4>
+                    <div class="space-y-3 text-sm">
+                        <a href="#home" class="block hover:text-white transition-colors">Головна</a>
+                        <a href="#breeds" class="block hover:text-white transition-colors">Каталог</a>
+                        <a href="#about" class="block hover:text-white transition-colors">Про нас</a>
+                    </div>
+                </div>
+              
+                <div class="md:col-span-2">
+                    <h4 class="font-semibold text-white mb-5">Популярні породи</h4>
+                    <div class="space-y-3 text-sm">
+                        <a href="#" onclick="showBreedModal(0)" class="block hover:text-white transition-colors">Лабрадор</a>
+                        <a href="#" onclick="showBreedModal(1)" class="block hover:text-white transition-colors">Німецька вівчарка</a>
+                        <a href="#" onclick="showBreedModal(2)" class="block hover:text-white transition-colors">Золотий ретривер</a>
+                        <a href="#" onclick="showBreedModal(3)" class="block hover:text-white transition-colors">Французький бульдог</a>
+                    </div>
+                </div>
+              
+                <div class="md:col-span-3">
+                    <h4 class="font-semibold text-white mb-5">Зв'яжіться з нами</h4>
+                    <p class="text-sm mb-4">Питання? Пропозиції? Пишіть!</p>
+                    <a href="mailto:hello@porodysobak.ua"
+                       class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-colors px-8 py-4 rounded-3xl text-white text-sm font-medium">
+                        <i class="fa-solid fa-envelope"></i>
+                        Написати нам
+                    </a>
+                </div>
+            </div>
+          
+            <div class="border-t border-zinc-800 mt-16 pt-8 text-center text-xs">
+                © 2026 ПородиСобак. Зроблено з ❤️ для собак і їхніх господарів.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="breed-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100] p-6">
+        <div class="modal bg-white max-w-4xl w-full rounded-3xl overflow-hidden max-h-[92vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white z-10 border-b flex items-center justify-between px-8 py-5">
+                <div id="modal-name" class="text-3xl font-bold"></div>
+                <button onclick="closeModal()"
+                        class="w-10 h-10 flex items-center justify-center text-3xl leading-none hover:bg-zinc-100 rounded-2xl transition-colors">×</button>
+            </div>
+          
+            <div class="p-8">
+                <div class="flex flex-col lg:flex-row gap-10">
+                    <div class="lg:w-5/12">
+                        <img id="modal-image"
+                             class="w-full rounded-3xl shadow-xl aspect-square object-cover">
+                    </div>
+                  
+                    <div class="lg:w-7/12 space-y-8">
+                        <div id="modal-short" class="text-xl text-zinc-600"></div>
+                      
+                        <div class="grid grid-cols-3 gap-6 text-sm">
+                            <div>
+                                <div class="font-medium text-zinc-500">Висота</div>
+                                <div id="modal-height" class="font-semibold text-lg"></div>
+                            </div>
+                            <div>
+                                <div class="font-medium text-zinc-500">Вага</div>
+                                <div id="modal-weight" class="font-semibold text-lg"></div>
+                            </div>
+                            <div>
+                                <div class="font-medium text-zinc-500">Тривалість життя</div>
+                                <div id="modal-lifespan" class="font-semibold text-lg"></div>
+                            </div>
+                        </div>
+                      
+                        <div>
+                            <div class="font-semibold mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-heart text-red-500"></i>
+                                Характер
+                            </div>
+                            <div id="modal-temperament" class="text-zinc-600 leading-relaxed"></div>
+                        </div>
+                      
+                        <div>
+                            <div class="font-semibold mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-book text-blue-500"></i>
+                                Детальний опис
+                            </div>
+                            <div id="modal-full" class="prose prose-zinc text-base leading-relaxed"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="bg-zinc-50 px-8 py-6 flex justify-end border-t">
+                <button onclick="closeModal()"
+                        class="px-10 py-4 font-semibold text-zinc-600 hover:bg-zinc-200 rounded-2xl transition-colors">
+                    Закрити
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const breeds = [
+            { id: 0, name: "Лабрадор-ретривер", size: "large", image: "images/labrador.jpg",
+              shortDesc: "Дружелюбний, розумний, ідеальний для сім'ї.",
+              height: "55–62 см", weight: "25–36 кг", lifespan: "10–12 років",
+              temperament: "Дуже добрі, обожнюють дітей, воду та ігри. Легко навчаються.",
+              fullDesc: `<p>Одна з найпопулярніших порід у світі. Походить з Канади, використовувався для полювання та допомоги рибалкам.</p><p>Чудові поводирі, рятувальники та сімейні компаньйони.</p>` },
+            { id: 1, name: "Німецька вівчарка", size: "large", image: "images/german-shepherd.jpg",
+              shortDesc: "Розумна, віддана, універсальна службова собака.",
+              height: "60–65 см", weight: "30–40 кг", lifespan: "9–13 років",
+              temperament: "Високий інтелект, відданість, охоронні якості.",
+              fullDesc: `<p>Класика службових собак — поліція, армія, рятувальні операції.</p><p>Потребує активності та чіткого виховання.</p>` },
+            { id: 2, name: "Золотий ретривер", size: "large", image: "images/golden-retriever.jpg",
+              shortDesc: "Ніжний, терплячий, надзвичайно добрий.",
+              height: "51–61 см", weight: "25–34 кг", lifespan: "10–12 років",
+              temperament: "Дуже добрий до дітей та інших тварин, майже без агресії.",
+              fullDesc: `<p>Виведений у Шотландії для полювання. Зараз — топ сімейна порода.</p><p>Люблять обійматися та грати.</p>` },
+            { id: 3, name: "Французький бульдог", size: "small", image: "images/french-bulldog.jpg",
+              shortDesc: "Милий, компактний, фотогенічний.",
+              height: "25–35 см", weight: "8–14 кг", lifespan: "10–12 років",
+              temperament: "Ласкавий, любить увагу, ідеальний для квартири.",
+              fullDesc: `<p>Улюбленець знаменитостей. Характерні вуха «летючої миші».</p><p>Не потребує великих навантажень.</p>` },
+            { id: 4, name: "Бігль", size: "medium", image: "images/beagle.jpg",
+              shortDesc: "Допитливий мисливець з чудовим нюхом.",
+              height: "33–40 см", weight: "9–11 кг", lifespan: "12–15 років",
+              temperament: "Енергійний, дружелюбний, голосний.",
+              fullDesc: `<p>Класична порода для полювання на зайців. Один з найкращих нюхів.</p><p>Любить «співати» — голосно гавкає.</p>` },
+            { id: 5, name: "Пудель", size: "medium", image: "images/poodle.jpg",
+              shortDesc: "Найрозумніша порода у світі.",
+              height: "35–60 см", weight: "5–30 кг", lifespan: "12–15 років",
+              temperament: "Розумний, грайливий, гіпоалергенний.",
+              fullDesc: `<p>Лідер за інтелектом. Бувають той, міні та стандарт.</p><p>Мало линяє — чудовий вибір для алергіків.</p>` },
+            { id: 6, name: "Ротвейлер", size: "large", image: "images/rottweiler.jpg",
+              shortDesc: "Сильний, впевнений захисник.",
+              height: "58–69 см", weight: "35–60 кг", lifespan: "8–10 років",
+              temperament: "Спокійний, відданий, чудовий охоронець.",
+              fullDesc: `<p>Давня порода для охорони. При правильному вихованні — надійний друг.</p>` },
+            { id: 7, name: "Йоркширський тер'єр", size: "small", image: "images/yorkshire-terrier.jpg",
+              shortDesc: "Маленький, але з великим характером.",
+              height: "20–23 см", weight: "2–3 кг", lifespan: "12–16 років",
+              temperament: "Сміливий, грайливий, прив'язаний до господаря.",
+              fullDesc: `<p>Колись ловив щурів, зараз — гламурна кімнатна собачка.</p>` },
+            { id: 8, name: "Такса", size: "small", image: "images/dachshund.jpg",
+              shortDesc: "Мисливець на нори з довгим тілом.",
+              height: "20–30 см", weight: "7–15 кг", lifespan: "12–16 років",
+              temperament: "Смілива, допитлива, віддана.",
+              fullDesc: `<p>Спеціально виведена для полювання в норах. Буває гладко-, довго- та жорсткошерста.</p>` },
+            { id: 9, name: "Сибірський хаскі", size: "large", image: "images/husky.jpg",
+              shortDesc: "Незалежний, красивий, витривалий.",
+              height: "50–60 см", weight: "16–27 кг", lifespan: "12–15 років",
+              temperament: "Дружелюбний, вільнолюбний, любить холод.",
+              fullDesc: `<p>Їздова порода чукчів. Мають часто блакитні або гетерохромні очі.</p><p>Дуже «розмовляють» голосом.</p>` },
+            { id: 10, name: "Чихуахуа", size: "small", image: "images/chihuahua.jpg",
+              shortDesc: "Найменша собака у світі з великим характером.",
+              height: "15–23 см", weight: "1–3 кг", lifespan: "12–20 років",
+              temperament: "Відважна, віддана, любить увагу.",
+              fullDesc: `<p>Походить з Мексики. Може жити до 20 років — справжній довгожитель.</p>` },
+            { id: 11, name: "Німецький шпіц (померан)", size: "small", image: "images/pomeranian.jpg",
+              shortDesc: "Пухнастий, веселий, дуже популярний в Україні.",
+              height: "18–22 см", weight: "1.8–3 кг", lifespan: "12–16 років",
+              temperament: "Активний, сміливий, любить бути в центрі уваги.",
+              fullDesc: `<p>Мініатюрна версія шпіца. Зараз лідер серед декоративних порід в Україні.</p>` },
+            { id: 12, name: "Коргі (Вельш-коргі пемброк)", size: "small", image: "images/corgi.jpg",
+              shortDesc: "Коротколапий, усміхнений, королівський компаньйон.",
+              height: "25–30 см", weight: "10–14 кг", lifespan: "12–15 років",
+              temperament: "Розумний, веселий, любить дітей.",
+              fullDesc: `<p>Улюбленець королеви Єлизавети II. Дуже енергійний та допитливий.</p>` },
+            { id: 13, name: "Боксер", size: "large", image: "images/boxer.jpg",
+              shortDesc: "Енергійний, грайливий, з почуттям гумору.",
+              height: "53–63 см", weight: "25–32 кг", lifespan: "10–12 років",
+              temperament: "Дуже активний, любить дітей.",
+              fullDesc: `<p>Вічні щенята — навіть у похилому віці поводяться як цуценята.</p>` },
+            { id: 14, name: "Австралійська вівчарка", size: "medium", image: "images/australian-shepherd.jpg",
+              shortDesc: "Розумна, активна, з яскравою зовнішністю.",
+              height: "46–58 см", weight: "16–32 кг", lifespan: "12–15 років",
+              temperament: "Енергійна, працьовита, прив'язана до господаря.",
+              fullDesc: `<p>Порода для активних людей. Потребує багато фізичних та розумових навантажень.</p>` },
+            { id: 15, name: "Ши-тцу", size: "small", image: "images/shih-tzu.jpg",
+              shortDesc: "Довгошерстий компаньйон з королівським характером.",
+              height: "20–28 см", weight: "4–7 кг", lifespan: "10–16 років",
+              temperament: "Ласкавий, спокійний, любить увагу.",
+              fullDesc: `<p>«Левова собачка» з Тибету. Ідеальна для квартири.</p>` },
+            { id: 16, name: "Джек-Рассел тер'єр", size: "small", image: "images/jack-russell.jpg",
+              shortDesc: "Енергійний, сміливий мисливець.",
+              height: "25–30 см", weight: "5–8 кг", lifespan: "13–16 років",
+              temperament: "Дуже активний, допитливий, безстрашний.",
+              fullDesc: `<p>Порода для людей, готових до постійного руху. Любить копати та ганятися.</p>` },
+            { id: 17, name: "Англійський кокер-спанієль", size: "medium", image: "images/cocker-spaniel.jpg",
+              shortDesc: "Веселий, ніжний, з красивою шерстю.",
+              height: "38–41 см", weight: "12–15 кг", lifespan: "12–15 років",
+              temperament: "Дружелюбний, грайливий, любить дітей.",
+              fullDesc: `<p>Чудовий компаньйон і мисливець. Дуже прив'язаний до сім'ї.</p>` },
+            { id: 18, name: "Мопс", size: "small", image: "images/pug.jpg",
+              shortDesc: "Милий, кумедний, зморшкуватий компаньйон.",
+              height: "25–35 см", weight: "6–8 кг", lifespan: "12–15 років",
+              temperament: "Спокійний, ласкавий, любить спати.",
+              fullDesc: `<p>Дуже виразна мордочка. Ідеальний для тих, хто хоче собаку-диван.»</p>` },
+            { id: 19, name: "Доберман", size: "large", image: "images/doberman.jpg",
+              shortDesc: "Елегантний, швидкий, відданий захисник.",
+              height: "61–72 см", weight: "30–45 кг", lifespan: "10–13 років",
+              temperament: "Розумний, пильний, дуже прив'язаний до господаря.",
+              fullDesc: `<p>Порода для досвідчених власників. Чудовий охоронець і компаньйон.</p>` }
+        ];
+
+        function renderBreeds(filteredBreeds) {
+            const container = document.getElementById('breeds-grid');
+            container.innerHTML = '';
+            filteredBreeds.forEach(breed => {
+                const cardHTML = `
+                    <div onclick="showBreedModal(${breed.id})"
+                         class="breed-card bg-white rounded-3xl overflow-hidden shadow-lg cursor-pointer group">
+                        <div class="relative">
+                            <img src="${breed.image}"
+                                 class="w-full h-64 object-cover transition-transform group-hover:scale-110 duration-500">
+                            <div class="absolute top-4 right-4 bg-white px-4 py-1 rounded-3xl text-xs font-medium shadow">
+                                ${breed.size === 'small' ? 'Маленький' : breed.size === 'medium' ? 'Середній' : 'Великий'}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-2xl mb-2">${breed.name}</h3>
+                            <p class="text-zinc-600 text-base line-clamp-3">${breed.shortDesc}</p>
+                            <div class="mt-6 flex justify-between items-center">
+                                <span class="text-xs uppercase tracking-widest text-blue-600 font-medium">Дізнатися більше</span>
+                                <i class="fa-solid fa-arrow-right text-blue-600 group-hover:translate-x-2 transition-transform"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        let currentSizeFilter = 'all';
+
+        function filterBySize(size) {
+            currentSizeFilter = size;
+            document.querySelectorAll('[id^="size-"]').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'active-size');
+                if (btn.id === `size-${size}` || (size === 'all' && btn.id === 'size-all')) {
+                    btn.classList.add('bg-blue-600', 'text-white', 'active-size');
+                }
+            });
+            filterBreeds();
+        }
+
+        function filterBreeds() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            let filtered = breeds;
+            if (currentSizeFilter !== 'all') {
+                filtered = filtered.filter(b => b.size === currentSizeFilter);
+            }
+            if (searchTerm) {
+                filtered = filtered.filter(b =>
+                    b.name.toLowerCase().includes(searchTerm) ||
+                    b.shortDesc.toLowerCase().includes(searchTerm) ||
+                    (b.temperament || '').toLowerCase().includes(searchTerm)
+                );
+            }
+            renderBreeds(filtered);
+        }
+
+        function showBreedModal(id) {
+            const breed = breeds.find(b => b.id === id);
+            if (!breed) return;
+
+            document.getElementById('modal-name').textContent = breed.name;
+            document.getElementById('modal-image').src = breed.image;
+            document.getElementById('modal-short').textContent = breed.shortDesc;
+            document.getElementById('modal-height').textContent = breed.height;
+            document.getElementById('modal-weight').textContent = breed.weight;
+            document.getElementById('modal-lifespan').textContent = breed.lifespan;
+            document.getElementById('modal-temperament').innerHTML = breed.temperament;
+            document.getElementById('modal-full').innerHTML = breed.fullDesc;
+
+            document.getElementById('breed-modal').classList.remove('hidden');
+            document.getElementById('breed-modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('breed-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function showRandomBreed() {
+            const randomId = Math.floor(Math.random() * breeds.length);
+            showBreedModal(randomId);
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === "Escape") {
+                const modal = document.getElementById('breed-modal');
+                if (!modal.classList.contains('hidden')) closeModal();
+            }
+        });
+
+        function init() {
+            renderBreeds(breeds);
+            document.getElementById('size-all').classList.add('bg-blue-600', 'text-white', 'active-size');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
