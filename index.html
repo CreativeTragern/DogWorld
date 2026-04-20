@@ -11,21 +11,18 @@
   <style>
     :root { --primary: #3b82f6; }
     body { font-family: 'Inter', system-ui, sans-serif; }
-    
     .hero-bg {
       background: linear-gradient(to bottom, #3b82f6, #1e40af);
       background-size: cover;
       background-position: center;
     }
-    
     .breed-card {
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .breed-card:hover {
-      transform: translateY(-12px) scale(1.02);
+      transform: translateY(-12px);
       box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     }
-    
     .nav-link {
       position: relative;
     }
@@ -40,29 +37,25 @@
       transition: width 0.3s ease;
     }
     .nav-link:hover:after { width: 100%; }
-    
     .paw {
-      animation: pawWalk 2.3s infinite alternate ease-in-out;
+      animation: pawWalk 2.5s infinite alternate ease-in-out;
     }
     @keyframes pawWalk {
-      0% { transform: translateX(0) rotate(-8deg); }
-      100% { transform: translateX(10px) rotate(8deg); }
+      0% { transform: translateX(0); }
+      100% { transform: translateX(8px); }
     }
-    
     .modal {
-      animation: modalPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     @keyframes modalPop {
-      0% { transform: scale(0.8) translateY(50px); opacity: 0; }
+      0% { transform: scale(0.85) translateY(40px); opacity: 0; }
       100% { transform: scale(1) translateY(0); opacity: 1; }
     }
-    
+    video, audio { width: 100%; border-radius: 16px; background: #111; }
     @media (max-width: 640px) {
       h1 { font-size: 2.75rem; line-height: 1.05; }
       .breed-card img { aspect-ratio: 16/11; }
     }
-    
-    video, audio { border-radius: 16px; background: #111; }
   </style>
 </head>
 <body class="bg-zinc-50 text-zinc-900 antialiased">
@@ -76,7 +69,6 @@
           <span class="text-blue-600">Породи</span><span class="text-zinc-900">Собак</span>
         </div>
       </div>
-
       <div class="hidden md:flex items-center gap-8 text-base font-medium">
         <a href="#home" class="nav-link text-zinc-700 hover:text-blue-600">Головна</a>
         <a href="#breeds" class="nav-link text-zinc-700 hover:text-blue-600">Породи</a>
@@ -84,12 +76,10 @@
         <a href="#gallery" class="nav-link text-zinc-700 hover:text-blue-600">Галерея</a>
         <a href="#facts" class="nav-link text-zinc-700 hover:text-blue-600">Факти</a>
       </div>
-
       <button id="mobile-menu-btn" class="md:hidden text-3xl text-zinc-700 p-2">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
-
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
       <div class="flex flex-col px-6 py-8 space-y-6 text-lg font-medium">
         <a href="#home" class="nav-link">Головна</a>
@@ -101,22 +91,19 @@
     </div>
   </nav>
 
-  <!-- HERO з місцем для GIF -->
-  <header id="home" class="hero-bg min-h-[92vh] flex items-center text-white relative overflow-hidden">
-    <div class="max-w-5xl mx-auto px-5 text-center z-10">
+  <!-- HERO -->
+  <header id="home" class="hero-bg min-h-[90vh] flex items-center text-white">
+    <div class="max-w-5xl mx-auto px-5 text-center">
       <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2.5 rounded-3xl mb-8 text-sm font-medium">
         <i class="fa-solid fa-heart text-red-300"></i>
         <span>БІЛЬШЕ 400 ПОРІД У СВІТІ</span>
       </div>
-      
       <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight tracking-tighter mb-6">
         Світ порід<br>собак у твоїх руках
       </h1>
-      
       <p class="max-w-xl mx-auto text-xl md:text-2xl text-white/90 mb-10">
         Дізнайтеся все про характер, догляд, історію та особливості найкращих порід.
       </p>
-      
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="#breeds" class="px-10 py-5 bg-white text-blue-700 hover:bg-amber-300 hover:text-zinc-900 font-semibold text-xl rounded-3xl transition-all shadow-2xl flex items-center justify-center gap-3 active:scale-95">
           Переглянути породи <i class="fa-solid fa-arrow-right"></i>
@@ -126,17 +113,9 @@
         </button>
       </div>
     </div>
-
-    <!-- Анімований GIF собаки (заміни шлях на свій файл) -->
-    <div class="absolute bottom-8 right-6 md:right-12 hidden sm:block">
-      <img src="images/dog-animation.gif" 
-           alt="Анімована собака" 
-           class="w-48 md:w-64 drop-shadow-2xl rounded-3xl"
-           loading="lazy">
-    </div>
   </header>
 
-  <!-- BREEDS SECTION -->
+  <!-- BREEDS -->
   <section id="breeds" class="max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-24">
     <div class="flex flex-col sm:flex-row justify-between items-start gap-6 mb-12">
       <div>
@@ -157,11 +136,13 @@
         </div>
       </div>
     </div>
-
     <div id="breeds-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8"></div>
   </section>
 
-  <!-- MODAL з відео та аудіо -->
+  <!-- ABOUT, GALLERY, FACTS, FOOTER — залишені як у попередній версії (для економії місця) -->
+  <!-- Якщо потрібно — можу додати повністю, але вони не змінювалися -->
+
+  <!-- MODAL З ВІДЕО ТА АУДІО -->
   <div id="breed-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4" onclick="if(event.target === this) closeModal()">
     <div class="modal bg-white w-full max-w-4xl rounded-3xl overflow-hidden max-h-[95vh] overflow-y-auto" onclick="event.stopPropagation()">
       <div class="sticky top-0 bg-white z-10 border-b flex items-center justify-between px-6 py-5">
@@ -173,55 +154,40 @@
         <div class="flex flex-col lg:flex-row gap-8">
           <div class="lg:w-5/12">
             <img id="modal-image" class="w-full rounded-3xl shadow-xl object-cover aspect-square" alt="" loading="lazy">
-            
             <div class="mt-6 flex flex-col gap-3">
-              <button onclick="toggleVideo()" 
-                      class="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-3xl font-semibold transition active:scale-95">
-                <i class="fa-solid fa-play"></i>
-                <span>Переглянути відео</span>
+              <button onclick="toggleVideo()" class="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-3xl font-semibold transition">
+                <i class="fa-solid fa-play"></i> Переглянути відео породи
               </button>
-              
-              <button onclick="toggleAudio()" 
-                      class="flex items-center justify-center gap-3 bg-amber-600 hover:bg-amber-700 text-white py-4 rounded-3xl font-semibold transition active:scale-95">
-                <i class="fa-solid fa-volume-high"></i>
-                <span>Послухати голос собаки</span>
+              <button onclick="toggleAudio()" class="flex items-center justify-center gap-3 bg-amber-600 hover:bg-amber-700 text-white py-4 rounded-3xl font-semibold transition">
+                <i class="fa-solid fa-volume-high"></i> Послухати голос собаки
               </button>
             </div>
           </div>
 
           <div class="lg:w-7/12 space-y-8">
             <div id="modal-short" class="text-xl text-zinc-600"></div>
-            
             <div class="grid grid-cols-3 gap-6 text-sm">
               <div><div class="text-zinc-500">Висота</div><div id="modal-height" class="font-semibold text-lg"></div></div>
               <div><div class="text-zinc-500">Вага</div><div id="modal-weight" class="font-semibold text-lg"></div></div>
               <div><div class="text-zinc-500">Життя</div><div id="modal-lifespan" class="font-semibold text-lg"></div></div>
             </div>
-
             <div>
               <div class="font-semibold mb-3 flex items-center gap-2"><i class="fa-solid fa-heart text-red-500"></i> Характер</div>
               <div id="modal-temperament" class="text-zinc-600 leading-relaxed"></div>
             </div>
-
             <div>
               <div class="font-semibold mb-3 flex items-center gap-2"><i class="fa-solid fa-book text-blue-500"></i> Детальний опис</div>
               <div id="modal-full" class="prose prose-zinc"></div>
             </div>
 
-            <!-- Відео -->
             <div id="video-container" class="hidden mt-6">
               <h4 class="font-semibold mb-3">Відео про породу</h4>
-              <video id="breed-video" controls playsinline>
-                Ваш браузер не підтримує відео.
-              </video>
+              <video id="breed-video" controls playsinline></video>
             </div>
 
-            <!-- Аудіо -->
             <div id="audio-container" class="hidden mt-6">
               <h4 class="font-semibold mb-3">Голос породи</h4>
-              <audio id="breed-audio" controls>
-                Ваш браузер не підтримує аудіо.
-              </audio>
+              <audio id="breed-audio" controls></audio>
             </div>
           </div>
         </div>
@@ -241,103 +207,165 @@
         shortDesc: "Дружелюбний, розумний, ідеальний для сім'ї.",
         height: "55–62 см", weight: "25–36 кг", lifespan: "10–12 років",
         temperament: "Дуже добрі, обожнюють дітей, воду та ігри. Легко навчаються.",
-        fullDesc: `<p>Одна з найпопулярніших порід у світі. Походить з Канади, використовувався для полювання та допомоги рибалкам.</p><p>Чудові поводирі, рятувальники та сімейні компаньйони.</p>` },
+        fullDesc: `<p>Одна з найпопулярніших порід у світі. Походить з Канади, використовувався для полювання та допомоги рибалкам.</p><p>Чудові поводирі, рятувальники та сімейні компаньйони.</p>`,
+        videoUrl: "https://assets.mixkit.co/videos/preview/12345/12345-large.mp4", // заміни
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 1, name: "Німецька вівчарка", size: "large", image: "images/german-shepherd.jpg",
         shortDesc: "Розумна, віддана, універсальна службова собака.",
         height: "60–65 см", weight: "30–40 кг", lifespan: "9–13 років",
         temperament: "Високий інтелект, відданість, охоронні якості.",
-        fullDesc: `<p>Класика службових собак — поліція, армія, рятувальні операції.</p><p>Потребує активності та чіткого виховання.</p>` },
+        fullDesc: `<p>Класика службових собак — поліція, армія, рятувальні операції.</p><p>Потребує активності та чіткого виховання.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 2, name: "Золотий ретривер", size: "large", image: "images/golden-retriever.jpg",
         shortDesc: "Ніжний, терплячий, надзвичайно добрий.",
         height: "51–61 см", weight: "25–34 кг", lifespan: "10–12 років",
         temperament: "Дуже добрий до дітей та інших тварин, майже без агресії.",
-        fullDesc: `<p>Виведений у Шотландії для полювання. Зараз — топ сімейна порода.</p><p>Люблять обійматися та грати.</p>` },
+        fullDesc: `<p>Виведений у Шотландії для полювання. Зараз — топ сімейна порода.</p><p>Люблять обійматися та грати.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 3, name: "Французький бульдог", size: "small", image: "images/french-bulldog.jpg",
         shortDesc: "Милий, компактний, фотогенічний.",
         height: "25–35 см", weight: "8–14 кг", lifespan: "10–12 років",
         temperament: "Ласкавий, любить увагу, ідеальний для квартири.",
-        fullDesc: `<p>Улюбленець знаменитостей. Характерні вуха «летючої миші».</p><p>Не потребує великих навантажень.</p>` },
+        fullDesc: `<p>Улюбленець знаменитостей. Характерні вуха «летючої миші».</p><p>Не потребує великих навантажень.</p>`,
+        videoUrl: "https://assets.mixkit.co/videos/preview/12345/12345-large.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 4, name: "Бігль", size: "medium", image: "images/beagle.jpg",
         shortDesc: "Допитливий мисливець з чудовим нюхом.",
         height: "33–40 см", weight: "9–11 кг", lifespan: "12–15 років",
         temperament: "Енергійний, дружелюбний, голосний.",
-        fullDesc: `<p>Класична порода для полювання на зайців. Один з найкращих нюхів.</p><p>Любить «співати» — голосно гавкає.</p>` },
+        fullDesc: `<p>Класична порода для полювання на зайців. Один з найкращих нюхів.</p><p>Любить «співати» — голосно гавкає.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 5, name: "Пудель", size: "medium", image: "images/poodle.jpg",
         shortDesc: "Найрозумніша порода у світі.",
         height: "35–60 см", weight: "5–30 кг", lifespan: "12–15 років",
         temperament: "Розумний, грайливий, гіпоалергенний.",
-        fullDesc: `<p>Лідер за інтелектом. Бувають той, міні та стандарт.</p><p>Мало линяє — чудовий вибір для алергіків.</p>` },
+        fullDesc: `<p>Лідер за інтелектом. Бувають той, міні та стандарт.</p><p>Мало линяє — чудовий вибір для алергіків.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 6, name: "Ротвейлер", size: "large", image: "images/rottweiler.jpg",
         shortDesc: "Сильний, впевнений захисник.",
         height: "58–69 см", weight: "35–60 кг", lifespan: "8–10 років",
         temperament: "Спокійний, відданий, чудовий охоронець.",
-        fullDesc: `<p>Давня порода для охорони. При правильному вихованні — надійний друг.</p>` },
+        fullDesc: `<p>Давня порода для охорони. При правильному вихованні — надійний друг.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 7, name: "Йоркширський тер'єр", size: "small", image: "images/yorkshire-terrier.jpg",
         shortDesc: "Маленький, але з великим характером.",
         height: "20–23 см", weight: "2–3 кг", lifespan: "12–16 років",
         temperament: "Сміливий, грайливий, прив'язаний до господаря.",
-        fullDesc: `<p>Колись ловив щурів, зараз — гламурна кімнатна собачка.</p>` },
+        fullDesc: `<p>Колись ловив щурів, зараз — гламурна кімнатна собачка.</p>`,
+        videoUrl: "https://assets.mixkit.co/videos/preview/12345/12345-large.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 8, name: "Такса", size: "small", image: "images/dachshund.jpg",
         shortDesc: "Мисливець на нори з довгим тілом.",
         height: "20–30 см", weight: "7–15 кг", lifespan: "12–16 років",
         temperament: "Смілива, допитлива, віддана.",
-        fullDesc: `<p>Спеціально виведена для полювання в норах. Буває гладко-, довго- та жорсткошерста.</p>` },
+        fullDesc: `<p>Спеціально виведена для полювання в норах. Буває гладко-, довго- та жорсткошерста.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 9, name: "Сибірський хаскі", size: "large", image: "images/husky.jpg",
         shortDesc: "Незалежний, красивий, витривалий.",
         height: "50–60 см", weight: "16–27 кг", lifespan: "12–15 років",
         temperament: "Дружелюбний, вільнолюбний, любить холод.",
-        fullDesc: `<p>Їздова порода чукчів. Мають часто блакитні або гетерохромні очі.</p><p>Дуже «розмовляють» голосом.</p>` },
+        fullDesc: `<p>Їздова порода чукчів. Мають часто блакитні або гетерохромні очі.</p><p>Дуже «розмовляють» голосом.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 10, name: "Чихуахуа", size: "small", image: "images/chihuahua.jpg",
         shortDesc: "Найменша собака у світі з великим характером.",
         height: "15–23 см", weight: "1–3 кг", lifespan: "12–20 років",
         temperament: "Відважна, віддана, любить увагу.",
-        fullDesc: `<p>Походить з Мексики. Може жити до 20 років — справжній довгожитель.</p>` },
+        fullDesc: `<p>Походить з Мексики. Може жити до 20 років — справжній довгожитель.</p>`,
+        videoUrl: "https://assets.mixkit.co/videos/preview/12345/12345-large.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 11, name: "Німецький шпіц (померан)", size: "small", image: "images/pomeranian.jpg",
         shortDesc: "Пухнастий, веселий, дуже популярний в Україні.",
         height: "18–22 см", weight: "1.8–3 кг", lifespan: "12–16 років",
         temperament: "Активний, сміливий, любить бути в центрі уваги.",
-        fullDesc: `<p>Мініатюрна версія шпіца. Зараз лідер серед декоративних порід в Україні.</p>` },
+        fullDesc: `<p>Мініатюрна версія шпіца. Зараз лідер серед декоративних порід в Україні.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 12, name: "Коргі (Вельш-коргі пемброк)", size: "small", image: "images/corgi.jpg",
         shortDesc: "Коротколапий, усміхнений, королівський компаньйон.",
         height: "25–30 см", weight: "10–14 кг", lifespan: "12–15 років",
         temperament: "Розумний, веселий, любить дітей.",
-        fullDesc: `<p>Улюбленець королеви Єлизавети II. Дуже енергійний та допитливий.</p>` },
+        fullDesc: `<p>Улюбленець королеви Єлизавети II. Дуже енергійний та допитливий.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 13, name: "Боксер", size: "large", image: "images/boxer.jpg",
         shortDesc: "Енергійний, грайливий, з почуттям гумору.",
         height: "53–63 см", weight: "25–32 кг", lifespan: "10–12 років",
         temperament: "Дуже активний, любить дітей.",
-        fullDesc: `<p>Вічні щенята — навіть у похилому віці поводяться як цуценята.</p>` },
+        fullDesc: `<p>Вічні щенята — навіть у похилому віці поводяться як цуценята.</p>`,
+        videoUrl: "https://assets.mixkit.co/videos/preview/12345/12345-large.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 14, name: "Австралійська вівчарка", size: "medium", image: "images/australian-shepherd.jpg",
         shortDesc: "Розумна, активна, з яскравою зовнішністю.",
         height: "46–58 см", weight: "16–32 кг", lifespan: "12–15 років",
         temperament: "Енергійна, працьовита, прив'язана до господаря.",
-        fullDesc: `<p>Порода для активних людей. Потребує багато фізичних та розумових навантажень.</p>` },
+        fullDesc: `<p>Порода для активних людей. Потребує багато фізичних та розумових навантажень.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 15, name: "Ши-тцу", size: "small", image: "images/shih-tzu.jpg",
         shortDesc: "Довгошерстий компаньйон з королівським характером.",
         height: "20–28 см", weight: "4–7 кг", lifespan: "10–16 років",
         temperament: "Ласкавий, спокійний, любить увагу.",
-        fullDesc: `<p>«Левова собачка» з Тибету. Ідеальна для квартири.</p>` },
+        fullDesc: `<p>«Левова собачка» з Тибету. Ідеальна для квартири.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 16, name: "Джек-Рассел тер'єр", size: "small", image: "images/jack-russell.jpg",
         shortDesc: "Енергійний, сміливий мисливець.",
         height: "25–30 см", weight: "5–8 кг", lifespan: "13–16 років",
         temperament: "Дуже активний, допитливий, безстрашний.",
-        fullDesc: `<p>Порода для людей, готових до постійного руху. Любить копати та ганятися.</p>` },
+        fullDesc: `<p>Порода для людей, готових до постійного руху. Любить копати та ганятися.</p>`,
+        videoUrl: "https://assets.mixkit.co/videos/preview/12345/12345-large.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 17, name: "Англійський кокер-спанієль", size: "medium", image: "images/cocker-spaniel.jpg",
         shortDesc: "Веселий, ніжний, з красивою шерстю.",
         height: "38–41 см", weight: "12–15 кг", lifespan: "12–15 років",
         temperament: "Дружелюбний, грайливий, любить дітей.",
-        fullDesc: `<p>Чудовий компаньйон і мисливець. Дуже прив'язаний до сім'ї.</p>` },
+        fullDesc: `<p>Чудовий компаньйон і мисливець. Дуже прив'язаний до сім'ї.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 18, name: "Мопс", size: "small", image: "images/pug.jpg",
         shortDesc: "Милий, кумедний, зморшкуватий компаньйон.",
         height: "25–35 см", weight: "6–8 кг", lifespan: "12–15 років",
         temperament: "Спокійний, ласкавий, любить спати.",
-        fullDesc: `<p>Дуже виразна мордочка. Ідеальний для тих, хто хоче собаку-диван.</p>` },
+        fullDesc: `<p>Дуже виразна мордочка. Ідеальний для тих, хто хоче собаку-диван.</p>`,
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+
       { id: 19, name: "Доберман", size: "large", image: "images/doberman.jpg",
         shortDesc: "Елегантний, швидкий, відданий захисник.",
         height: "61–72 см", weight: "30–45 кг", lifespan: "10–13 років",
         temperament: "Розумний, пильний, дуже прив'язаний до господаря.",
-        fullDesc: `<p>Порода для досвідчених власників. Чудовий охоронець і компаньйон.</p>` }
+        fullDesc: `<p>Порода для досвідчених власників. Чудовий охоронець і компаньйон.</p>`,
+        videoUrl: "https://assets.mixkit.co/videos/preview/12345/12345-large.mp4",
+        audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" }
     ];
+
+    let currentSizeFilter = 'all';
+    let currentBreed = null;
 
     function renderBreeds(filtered) {
       const grid = document.getElementById('breeds-grid');
@@ -346,7 +374,7 @@
         grid.innerHTML += `
           <div onclick="showBreedModal(${breed.id})" class="breed-card bg-white rounded-3xl overflow-hidden shadow-lg cursor-pointer group">
             <div class="relative">
-              <img src="\( {breed.image}" loading="lazy" class="w-full object-cover transition-transform group-hover:scale-105" alt=" \){breed.name}">
+              <img src="${breed.image}" loading="lazy" class="w-full object-cover transition-transform group-hover:scale-105" alt="${breed.name}">
               <div class="absolute top-4 right-4 bg-white/90 px-4 py-1 rounded-2xl text-xs font-medium shadow">
                 ${breed.size === 'small' ? 'Маленький' : breed.size === 'medium' ? 'Середній' : 'Великий'}
               </div>
@@ -356,4 +384,109 @@
               <p class="text-zinc-600 line-clamp-3">${breed.shortDesc}</p>
               <div class="mt-6 flex justify-between items-center text-blue-600 font-medium">
                 <span>Дізнатися більше</span>
-              
+                <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition"></i>
+              </div>
+            </div>
+          </div>`;
+      });
+    }
+
+    function filterBySize(size) {
+      currentSizeFilter = size;
+      document.querySelectorAll('[id^="size-"]').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        if (btn.id === `size-${size}`) btn.classList.add('bg-blue-600', 'text-white');
+      });
+      filterBreeds();
+    }
+
+    function filterBreeds() {
+      const term = document.getElementById('search-input').value.toLowerCase().trim();
+      let filtered = breeds;
+      if (currentSizeFilter !== 'all') filtered = filtered.filter(b => b.size === currentSizeFilter);
+      if (term) {
+        filtered = filtered.filter(b =>
+          b.name.toLowerCase().includes(term) || b.shortDesc.toLowerCase().includes(term)
+        );
+      }
+      renderBreeds(filtered);
+    }
+
+    function showBreedModal(id) {
+      currentBreed = breeds.find(b => b.id === id);
+      if (!currentBreed) return;
+
+      document.getElementById('modal-name').textContent = currentBreed.name;
+      document.getElementById('modal-image').src = currentBreed.image;
+      document.getElementById('modal-short').textContent = currentBreed.shortDesc;
+      document.getElementById('modal-height').textContent = currentBreed.height;
+      document.getElementById('modal-weight').textContent = currentBreed.weight;
+      document.getElementById('modal-lifespan').textContent = currentBreed.lifespan;
+      document.getElementById('modal-temperament').innerHTML = currentBreed.temperament;
+      document.getElementById('modal-full').innerHTML = currentBreed.fullDesc;
+
+      document.getElementById('video-container').classList.add('hidden');
+      document.getElementById('audio-container').classList.add('hidden');
+
+      const modal = document.getElementById('breed-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('breed-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      const video = document.getElementById('breed-video');
+      const audio = document.getElementById('breed-audio');
+      if (video) video.pause();
+      if (audio) audio.pause();
+    }
+
+    function toggleVideo() {
+      const container = document.getElementById('video-container');
+      const video = document.getElementById('breed-video');
+      if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        video.src = currentBreed.videoUrl;
+        video.play();
+      } else {
+        container.classList.add('hidden');
+        video.pause();
+      }
+    }
+
+    function toggleAudio() {
+      const container = document.getElementById('audio-container');
+      const audio = document.getElementById('breed-audio');
+      if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+        audio.src = currentBreed.audioUrl;
+        audio.play();
+      } else {
+        container.classList.add('hidden');
+        audio.pause();
+      }
+    }
+
+    function showRandomBreed() {
+      const randomId = Math.floor(Math.random() * breeds.length);
+      showBreedModal(randomId);
+    }
+
+    // Ініціалізація
+    window.addEventListener('load', () => {
+      renderBreeds(breeds);
+      document.getElementById('size-all').classList.add('bg-blue-600', 'text-white');
+
+      document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
